@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('/static/mahe2.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+        #logo {
+            width: 60px;
+            height: 60px;
+        }
+        #title {
+            margin-left: 20px;
+            font-size: 24px; 
+            color: #333; 
+            font-weight: bold; 
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8); 
+            padding: 10px;
+        }
+        .header img {
+            width: 50px;
+            height: 50px;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 450px;
+            align-items: center;
+            background-color: rgb(0, 159, 165); 
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input[type="text"] {
+            width: 400px;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #b38f00;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00b368;
+        }
+        .home-link {
+            text-decoration: none;
+            color: #ff0055;
+        }
+        .home-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='msis_logo.jpg') }}" alt="Image" id="logo"> 
+        <a href="#" class="home-link">Home</a>
+    </div>
+    <div class="container">
+        <header>
+            <h1 id="title">Web scraper</h1>
+        </header>
+        <form id="urlForm" action="/render" method="POST">
+            <input type="text" id="urlInput" name="url" placeholder="Enter your URL here" required>
+            <button type="submit">GO</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('urlForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            var url = document.getElementById('urlInput').value;
+            if (url.trim() !== '') {
+                window.open(url, '_blank');
+                this.submit(); // Submit the form
+            } else {
+                alert('Please enter a valid URL');
+            }
+        });
+    </script>
+</body>
+</html>
