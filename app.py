@@ -76,13 +76,13 @@ def scrape_data_CSV():
             w.writeheader()
             for element in tags_list:
                 w.writerow(element)
-        return send_file(filename, as_attachment=True, attachment_filename=filename, mimetype='text/csv')
+        return send_file(filename, as_attachment=True, download_name=filename, mimetype='text/csv')
     
     elif value == 'json':
         filename = 'download.json'
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(tags_list, f, indent=4, ensure_ascii=False)
-        return send_file(filename, as_attachment=True, attachment_filename=filename, mimetype='application/json')
+        return send_file(filename, as_attachment=True, download_name=filename, mimetype='application/json')
 
     
     elif value == 'excel':
@@ -97,7 +97,7 @@ def scrape_data_CSV():
         output = BytesIO()
         workbook.save(output)
         output.seek(0)
-        return send_file(output, as_attachment=True, attachment_filename=filename, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        return send_file(output, as_attachment=True, download_name=filename, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
     
