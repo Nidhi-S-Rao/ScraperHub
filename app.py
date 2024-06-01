@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
-@app.route('/home', methods=['GET'])
+@app.route('/')
 def index():
     return render_template('index.html')
 
