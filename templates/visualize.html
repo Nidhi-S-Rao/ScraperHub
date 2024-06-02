@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('/static/mahe.jpg'); 
+            background-image: url('/static/mahe2.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -79,9 +79,10 @@
             background-color: #f2f2f2;
         }
 
-        img {
-            max-width: 100px;
-            max-height: 100px;
+        .plot {
+            width: 60%;
+            height: auto;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -91,37 +92,12 @@
         <a href="#" class="home-link">Home</a>
     </div>
     <div class="container">
-        <form action="/scrape_CSV" method="POST">
-            <input type="hidden" name="scraped_content_list" value='{{ scraped_data | tojson | safe }}'>
-            <input type="hidden" name="user_input" value='{{ user_input }}'>
-            <button type="submit" name="action" value="csv">Get Data in CSV</button>
-            <button type="submit" name="action" value="json">Get Data in JSON</button>
-            <button type="submit" name="action" value="excel">Get Data in EXCEL</button>
-            <button type="submit" name="action" value="visualization">Visualization</button>
-        </form>
-        <h1>Scraped Content</h1>
-        <table>
-            <thead>
-                <tr>
-                    {% for item in scraped_data[0].keys() %}
-                        <th>{{ item }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in scraped_data %}
-                    <tr>
-                        {% for key, value in item.items() %}
-                            {% if key == 'img' %}
-                                <td><img src="{{ value }}" alt="Image"></td>
-                            {% else %}
-                                <td>{{ value }}</td>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <input type="hidden" name="chart" value="{{ chart }}" readonly>
+        <input type="hidden" name="tags" value="{{ tags }}" readonly>
+
+        {% if img_data %}
+            <img src="data:image/png;base64,{{ img_data }}" alt="Chart" class="plot">
+        {% endif %}
     </div>
 </body>
 </html>
