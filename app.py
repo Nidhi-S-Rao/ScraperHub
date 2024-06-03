@@ -23,14 +23,8 @@ def render():
     url = request.form.get('url')
     print(url)
     return render_template('render.html', url=url)
-@app.route('/scrape', methods=['POST'])
-def scrape():
-    user_input = request.form.get('user_input')
-    print(user_input)
-    url = request.form.get('url')
-    print(url)
-    tag_classes = user_input.split(',')
-    print(tag_classes)
+
+def scrape_single_page(url, tag_classes):
     response = requests.get(url)
     response.raise_for_status()  
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -43,9 +37,27 @@ def scrape():
             element = scrape_elements[tag_class][i]
             data[tag_class] = element.get_text(strip=True)
         scraped_content_list.append(data)
-    print("Type-------------------------------------------------------------------------------------",type(scraped_content_list))
+    return scraped_content_list
 
-    return render_template('scrape.html', scraped_data=scraped_content_list, user_input=user_input)
+@app.route('/scrape', methods=['POST'])
+def scrape():
+    user_input = request.form.get('user_input')
+    url = request.form.get('url')
+    
+    tag_classes = user_input.split(',')
+    
+   
+    scraped_data = scrape_single_page(url, tag_classes)
+    number=request.form.get('page')
+    print(number)
+    if number is not '':
+        page=int(number)
+        for page_number in range(2, page+1):  
+            print(page_number)
+            next_page_url = f"{url}?page={page_number}"  
+            scraped_data += scrape_single_page(next_page_url, tag_classes)
+    
+    return render_template('scrape.html', scraped_data=scraped_data, user_input=user_input)
 
 def decode_unicode_values(data):
     if isinstance(data, dict):

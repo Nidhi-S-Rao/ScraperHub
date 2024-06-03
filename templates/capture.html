@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraper Capture</title>
+</head>
+<body>
+    <iframe id="targetFrame" src="{{ url }}" style="width: 100%; height: 100vh; border: none;"></iframe>
+    <script>
+        document.getElementById('targetFrame').onload = function() {
+            var iframeDocument = document.getElementById('targetFrame').contentDocument || document.getElementById('targetFrame').contentWindow.document;
+            iframeDocument.body.addEventListener('click', function(event) {
+                var target = event.target;
+                var tag = target.tagName.toLowerCase();
+                if (window.opener && !window.opener.closed) {
+                    alert('You clicked on a ' + tag + ' element.');
+                    window.opener.document.getElementById('tagInput').value = tag;
+                }
+            }, true);
+        };
+    </script>
+</body>
+</html>
