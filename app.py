@@ -177,7 +177,7 @@ def scrapeVisualize():
         
         plt.figure(figsize=(22,22))
         plt.pie(counts.values(), labels=counts.keys(), autopct='%1.1f%%', startangle=90, textprops={'fontsize': 14, 'fontweight': 'bold'}, wedgeprops={'width': 0.6})
-        plt.title("Pie chart", fontsize=20, fontweight='bold')
+        plt.title("Donut chart", fontsize=20, fontweight='bold')
         
         # Save plot to a BytesIO object
         img_io = io.BytesIO()
